@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 PATH_PROJECT_DIR = Path(__file__).resolve().parents[2]
 PATH_PROJECT_REPORTS = Path.joinpath(PATH_PROJECT_DIR, 'reports')
 PATH_PROJECT_DATA = Path.joinpath(PATH_PROJECT_DIR, 'data')
-PATH_PROJECT_MODELS = Path.joinpath(PATH_PROJECT_DIR, 'modelos')
+PATH_PROJECT_MODELS = './model/'
+
+
 seeds=[0, 45, 34, 15]
 timeseries_length=1452
 out_ts_length=12
@@ -24,7 +26,7 @@ config_lstm = {
   "scaler_type": tune.choice(['robust', 'minmax', 'standard']),
   "batch_size": tune.choice([3, 6, 10]), 
   "random_seed": tune.randint(1, 5),
-  "max_steps": tune.choice([500]),
+  "max_steps": tune.choice([1000]),
   "val_check_steps": tune.choice([10])
 }
 config_tcn = {
@@ -37,7 +39,7 @@ config_tcn = {
   "scaler_type": tune.choice(['robust', 'minmax', 'standard']),
   "batch_size": tune.choice([3, 6, 10]), 
   "random_seed": tune.randint(1, 5),
-  "max_steps": tune.choice([500]),
+  "max_steps": tune.choice([1000]),
   "val_check_steps": tune.choice([10])
 }
 

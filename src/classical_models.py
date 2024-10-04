@@ -94,7 +94,7 @@ if __name__ == "__main__":
         df, train, test = extract_series_general(dataset_name=args.dataset_name,
                                                  n_samples=args.n_samples,
                                                  prediction_horizon=args.prediction_horizon,
-                                                 ts_length= ts_length
+                                                 ts_length= args.ts_length
                                                  )
 
 
