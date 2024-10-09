@@ -15,6 +15,12 @@ max_epochs=15
 samples_day=288
 seq_len= 96
 
+
+
+time_column = 'time'
+cgm_column = 'cgm'
+
+
 config_lstm = {
   "input_size": tune.choice([seq_len]),
   "h": None,
