@@ -12,7 +12,7 @@ from utils.read import read_time_series
 def create_prediction_model(user_id):
     prediction_horizon = 12
     num_workers_loader = -1
-    n_trials = 2
+    n_trials = 50
 
     time_series = read_time_series(str(user_id))
     time_series['unique_id'] = 0
