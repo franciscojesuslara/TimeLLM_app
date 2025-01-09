@@ -33,15 +33,6 @@ def evaluate_performance(df, columnas, df_val=None):
         rmse_std=('rmse', 'std'),
     ).reset_index()
     if df_val is not None:
-
-        df_val = df_val[df_val['unique_id'] != '1170_0']
-        df_val = df_val[df_val['unique_id'] != '1271_14']
-        df_val = df_val[df_val['unique_id'] != '1711_1']
-
-        df_val = df_val[df_val['unique_id'] != '1536_1']
-        df_val = df_val[df_val['unique_id'] != '870_1']
-        df_val = df_val[df_val['unique_id'] != '1611_4']
-        df_val = df_val[df_val['unique_id'] != '1622_1']
         best_model_per_patient = pd.merge(losses, df_val, on=['unique_id', 'model'],suffixes=('_test', '_val'),
                                           how='inner')
     else:
