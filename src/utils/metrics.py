@@ -9,7 +9,7 @@ import pandas as pd
 from datasetsforecast.losses import mse, mae, rmse, rmae
 
 def compute_losses(group):
-    actual = group['cgm']
+    actual = group['value']
     predicted = group['predicted']
     mse_loss = mse(actual, predicted)
     mae_loss = mae(actual, predicted)
@@ -22,7 +22,7 @@ def compute_losses(group):
 def evaluate_performance(df, columnas, df_val=None):
     df = df.reset_index()[columnas]
 
-    melted_df = df.melt(id_vars=['unique_id', 'cgm'], var_name='model', value_name='predicted')
+    melted_df = df.melt(id_vars=['unique_id', 'value'], var_name='model', value_name='predicted')
     losses = melted_df.groupby(['unique_id', 'model']).apply(compute_losses).reset_index()
     aggregated_losses = losses.groupby('model').agg(
         mse_mean=('mse', 'mean'),
