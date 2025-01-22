@@ -15,6 +15,8 @@ def create_prediction_model(user_id):
     n_trials = 50
 
     time_series = read_time_series(str(user_id))
+    if  len(time_series) < 130:
+        raise ValueError("Not enough data to train the model.")
     time_series['unique_id'] = 0
 
     llm_config, llm_model, llm_tokenizer = select_llm(name_llm='gpt')
@@ -49,8 +51,7 @@ def create_prediction_model(user_id):
                 random_seed=0,
                 num_workers_loader=num_workers_loader,
                 max_steps=1000,
-                )
-                ]
+                )]
 
     nf = NeuralForecast(
         models=model_list,
@@ -62,7 +63,7 @@ def create_prediction_model(user_id):
         time_col="dateTime",
         target_col="value",
         verbose=True,
-        n_windows=50,
+        n_windows=20,
         step_size=1)
 
     columns_list = ['AutoTCN', 'AutoLSTM', 'AutoNHITS', 'AutoTiDE', 'AutoTSMixer', 'AutoPatchTST','TimeLLM',
@@ -83,6 +84,8 @@ def get_glucose_prediction(user_id):
 
     time_series = read_time_series(str(user_id))
     time_series['unique_id'] = 0
+    if  len(time_series) < 96:
+        raise ValueError("Not enough data to make a prediction.")
 
     nf = NeuralForecast.load(path=os.path.join(cons.PATH_PROJECT_MODELS, str(user_id)))
 

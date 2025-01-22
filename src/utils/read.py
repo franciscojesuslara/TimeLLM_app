@@ -2,11 +2,17 @@ import pandas as pd
 import numpy as np
 import utils.constants as cons
 import os
+import warnings
 
 def read_time_series(user_id):
     df =  last_modified(cons.PATH_PROJECT_DATA, user_id)
     df.index = pd.DatetimeIndex(df.dateTime)
-    df = df['value'].resample("15min", offset='1min').mean().interpolate().to_frame()
+    df = df['value'].resample("15min", offset='1min').mean()
+    nan_values = df.isna().sum()
+    if  nan_values/len(df) > 0.25:
+        warnings.warn("Forecasting may not be reliable due to a high percentage of missing data.")
+
+    df = df.interpolate().to_frame()
     df = df.reset_index()
     return df
 
